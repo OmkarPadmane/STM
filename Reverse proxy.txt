@@ -1,0 +1,83 @@
+vm 1
+
+systemctl start nginx
+
+sudo unlink /etc/nginx/sites-enabled/default 
+
+sudo mkdir -p /var/www/thanos.com/html
+
+sudo vim /var/www/thanos.com/html/index.html
+	<h1>Thanos</h1>
+
+sudo chown -R $USER:$USER /var/www/thanos.com/html
+
+
+
+sudo mkdir -p /var/www/marval.com/html
+sudo vim /var/www/marval.com/html/index.html
+	<h1>Marval</h1>
+
+sudo chown -R $USER:$USER /var/www/marval.com/html
+
+sudo chmod -R 755 /var/www
+
+
+sudo vim /etc/nginx/sites-available/thanos.conf
+
+
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/thanos.com/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name thanos.com www.thanos.com;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
+
+
+sudo vim /etc/nginx/sites-available/marval.conf
+
+
+server {
+        listen 80 ;
+        listen [::]:80 ;
+
+        root /var/www/marval.com/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name marval.com www.marval.com;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
+
+
+sudo ln -s /etc/nginx/sites-available/thanos.conf /etc/nginx/sites-enabled/thanos
+
+sudo ln -s /etc/nginx/sites-available/marval.conf /etc/nginx/sites-enabled/marval
+
+sudo vim /etc/hosts
+
+
+172.16.0.5  thanos.com	www.thanos.com
+172.16.0.5  marval.com	www.marval.com
+
+
+sudo nginx -t
+
+systemctl restart nginx
+
+
+in browser:
+
+http://localhost
+www.thanos.com
+www.marval.com
+
+
