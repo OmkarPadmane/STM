@@ -1,0 +1,27 @@
+vm1(server)
+
+ vim  /etc/nginx/conf.d/loadbalancer.conf
+
+upstream backend {
+        server 192.168.206.133;
+	server 192.168.206.131;
+    }
+server {
+        listen      80;
+	server_name 192.168.206.134;
+	location / {
+		proxy_pass http://backend;
+	}
+}
+
+
+
+vm 2(web server)
+
+sudo vim /var/www/html/index.html
+	<h1>web server 1</h1>
+
+
+vm 3(web server)
+sudo vim /var/www/html/index.html
+	<h1>web server 1</h1>
