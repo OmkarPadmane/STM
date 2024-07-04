@@ -1,0 +1,132 @@
+Configuration
+virtual hosting (1 vm only)
+---------
+PROXY : 
+    Nginx: [ web proxy server ]
+
+$ apt install nginx -y
+$ systemctl start nginx
+$ systemctl enable nginx
+$ systemctl status nginx
+
+
+$ ls /etc/nginx/sites-available     - all config file
+$ ls /etc/nginx/sites-enabled     - all link to the config file or symbolic or soft link
+
+stop the default server
+$ unlink /etc/nginx/sites-enabled/default
+
+
+$ mkdir -p /var/www/marvels/html
+$ mkdir -p /var/www/thanos/html
+
+$ apt install vim -y
+
+$ vim /var/www/marvels/html/index.html
+<h1>---------------</h1>
+<h1>--- MARVELS ---</h1>
+<h1>---------------</h1>
+
+
+
+$ vim /var/www/thanos/html/index.html
+<h1>---------------</h1>
+<h1>---- THANOS ---</h1>
+<h1>---------------</h1>
+
+------
+set hosting configuration file
+
+go to 
+$ cd /etc/nginx/sites-available
+
+
+$ vim marvels.conf
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/www/marvels/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name marvels.com www.marvels.com;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+
+$ vim thanos.conf
+
+server {
+    listen 80 ;
+    listen [::]:80 ;
+
+    root /var/www/thanos/html;
+    index index.html index.htm index.nginx-debian.html;
+
+    server_name thanos.com www.thanos.com;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+
+------
+there are three files created (default, marvels.conf, thanos.conf)rename default -- 
+
+$ mv default backdefault
+
+
+create link of file 
+
+$ ln -s /etc/nginx/sites-available/marvels.conf /etc/nginx/sites-enabled/marvels.conf
+
+$ ln -s /etc/nginx/sites-available/thanos.conf /etc/nginx/sites-enabled/thanos.conf
+
+-----
+Information of above command            
+ln = link
+-s = soft link or symboilc link
+-----
+
+check the nginx files
+$ nginx -t
+
+o/p : (nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful)
+
+$ systemctl restart nginx
+$ cd
+----------
+create forced dns
+----------
+$ vim /etc/hosts
+
+--create ip and domain name for all for config 
+-(ip of your vm)
+
+	192.168.206.134 marvels.com www.marvels.com
+	192.168.206.134 thanos.com www.thanos.com
+
+---------
+
+$ host marvels.com
+$ host thanos.com
+
+ for checking valid address
+----
+$ apt install curl
+
+check if the websites are working or not
+
+# curl marvels.com
+# curl thanos.com
+
+or check on browser 
+
+marvels.com  or  www.marvels.com
+thanos.com   or  www.thanos.com
