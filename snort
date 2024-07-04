@@ -5,9 +5,11 @@ apt install snort
 sed -i 's/^include $RULE_PATH/#include $RULE_PATH/' /etc/snort/snort.conf
 
 vim /etc/snort/snort.conf
-home net network of the ip
 
 uncomment include $RULE_PATH local.rule
+
+IDS : alert , log , pass
+IPS : drop , reject , sdrop
 
 vim /etc/snort/rules/local.rules
 
