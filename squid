@@ -1,0 +1,67 @@
+####################### squid Acl rules ##############################
+ vm os : centos
+1.firewall (nat ,host)
+2.client   (host only)
+
+# on firewall (fresh machine)
+ yum remove iptables.x86_64 
+
+$ su
+$ cd /etc/yum.repos.d/
+$ sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+$ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+$ yum install squid
+
+
+$ cd /etc/squid 
+
+$ vim squid.conf
+$ squid -k reconfigure   -- after editing squid file give this cmd every time
+
+
+1) block/allow specific ip/device
+acl mynet src 192.168.133.134
+http_access allow/deny mynet
+
+2) block/allow specific ip range
+acl mynet src 192.168.133.0/24
+http_access allow/deny mynet
+
+3) block particular site
+acl blocksite dstdomain .microsoft.com
+http_access allow/deny blocksite
+
+4) block multiple website through txt file
+
+- create text file .txt and add 2-3 websites
+
+$ vim /etc/squid/block-sites.txt
+	.facebook.com
+	.youtube.com
+
+$ vim squid.conf
+
+acl block_sites dstdomain "/etc/squid/block-sites.txt"
+http_access deny block_sites 
+
+$ squid -k reconfigure
+
+5) block/allow user for specific time
+
+acl client1 src 192.168.133.140
+acl blocktime time A 17:50-18:50
+http_access deny/allow blocktime client1
+
+6) Block some websites for client1 and allow for client2.
+ 
+acl client1 src 192.168.133.140
+acl client1_blocked_sites dstdomain "/etc/squid/client1-blocked-sites.txt"
+http_access deny client1_blocked_sites client1
+
+
+7) Block some websites for both clients.
+
+acl band_sites dstdomain "/etc/squid/band-sites.txt"
+http_access deny band_sites hpcsalab
+
+
