@@ -1,10 +1,8 @@
 CentOS: 
 vm 1 : server 
 
+Add two Network adapter in VM : NAT and Host-Only
 stop firewall
-Add two Network adapter in VM one NAT and one is Host-Only
-ens33 : 192.168.206.133/24
-ens37 : 10.0.0.100/24 
 
 vm2 : client
 
@@ -18,7 +16,8 @@ check dhcp is enabled
 ---------------------------
 
 vm1 :
-
+$ systemctl stop firewalld
+$ systemctl status firewalld
 $ cd /etc/yum.repos.d/
 $ sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
 $ sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
