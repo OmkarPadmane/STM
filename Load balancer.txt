@@ -1,27 +1,74 @@
-vm1(server)
+3 vm /DO IT IN Linux
+1 server
+2 vm as client(as a backbone)
+-----
+install ssh for mobaxterm
+install vim on all vm
+-----
+vm1(SERVER):
 
- vim  /etc/nginx/conf.d/loadbalancer.conf
+iNSTALL NGINX IN SERVER ONLY
+
+$ sudo su
+$ sudo apt install nginx -y
+$ systemctl enable nginx
+$ systemctl status nginx
+
+
+$ vim /etc/nginx/conf.d/loadbalancer.conf
 
 upstream backend {
-        server 192.168.206.133;
-	server 192.168.206.131;
+        server 192.168.206.133; #ip of vm2
+	server 192.168.206.131; #ip of vm3
     }
 server {
         listen      80;
-	server_name 192.168.206.134;
+	server_name 192.168.206.134;  #ip of vm1 
 	location / {
 		proxy_pass http://backend;
 	}
 }
 
 
+--------------------------------------
 
-vm 2(web server)
+vm 2 (web server)
 
-sudo vim /var/www/html/index.html
+$ sudo apt install nginx -y
+$ systemctl enable nginx
+$ systemctl status nginx
+ 
+delete default nginx file
+$ rm -r /var/www/html/index.nginx-debian.html
+
+$ sudo nano /var/www/html/index.html
 	<h1>web server 1</h1>
 
+------------------------
+vm 3 (web server)
 
-vm 3(web server)
-sudo vim /var/www/html/index.html
+$ sudo apt install nginx -y
+$ systemctl enable nginx
+$ systemctl status nginx
+ 
+delete default nginx file
+$ rm -r /var/www/html/index.nginx-debian.html
+
+$ sudo nano /var/www/html/index.html
 	<h1>web server 1</h1>
+----------------
+
+DO it on all vms
+
+$ sudo nginx -t
+$ sudo systemctl reload nginx
+
+--------------
+vm 1 :
+
+$ apt install curl
+
+curl ......(ip of main server)
+do it multiple times
+or
+go on browser enter ip
