@@ -56,9 +56,9 @@ Basic firewall commands
 	add or remove Port
 		# firewall-cmd --zone=public --add-port=2020/tcp --permanent
 		# firewall-cmd --zone=public --add-port=8080/udp --add-port=4040/tcp --permanent
-		#firewall-cmd --reload 
+		# firewall-cmd --reload 
 		# firewall-cmd --zone=public --remove-port=2020/tcp --permanent
-		# firewall-cmd --zone=public --remove-port=8080/udp --add-port=4040/tcp --permanent
+		
 
 
 
