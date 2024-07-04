@@ -11,6 +11,11 @@ uncomment include $RULE_PATH local.rule
 IDS : alert , log , pass
 IPS : drop , reject , sdrop
 
+this is format :
+
+  alert            ip       any       any ->     any        any       (msg:"ip alert"; sid:100001; rev:1; )
+(snort rule)   (protocol) (src ip) (src port)  (dst ip)  (dst port)       (message)
+
 vim /etc/snort/rules/local.rules
 
 alert ip any any -> any any (msg:"ip alert"; sid:100001; rev:1; )
