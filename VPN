@@ -122,7 +122,7 @@ Do you want to protect the configuration file with a password?
    2) Use a password for the client
 Select an option [1-2]: 1
 
-Client kazama added.
+Client zoro added.
 
 The configuration file has been written to /root/zoro.ovpn.
 Download the .ovpn file and import it in your OpenVPN client.
