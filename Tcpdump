@@ -6,7 +6,7 @@ How to Install tcpdump in Linux
 ``````````
 # apt install tcpdump  [On Debian, Ubuntu]
 # yum install tcpdump  [On RHEL/CentOS/Fedora]
-
+# systemctl status tcpdump
 
 	1. Capture Packets from Specific Interface
 	``````````````````````````````````````````
