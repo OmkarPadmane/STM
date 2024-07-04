@@ -30,7 +30,7 @@ Basic firewall commands
 	
 	make Permanent 
 		# firewall-cmd --zone=dmz --change-interface=ens33
-		# anything and then --permanet
+		# anything and then --permanent
 		# firewall-cmd --reload	
 	
 	create new Zone
@@ -42,7 +42,7 @@ Basic firewall commands
 		
 		# firewall-cmd --add-interface=ens33 --permanent
 
-		# firewall-cmd  --delete-zone=hpcsa --permanet
+		# firewall-cmd  --delete-zone=hpcsa --permanent
 
 	add or remove Services 
 		# firewall-cmd --get-services
