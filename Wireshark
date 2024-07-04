@@ -1,3 +1,6 @@
+vm os ubuntu/centos
+
+$ yum/apt install wireshark
 
 Wireshark :
 ```````````
