@@ -1,0 +1,105 @@
+Basic firewall commands
+	current State 
+		# firewall-cmd --state
+
+	check Zones 
+		# firewall-cmd --get-zones
+
+		# ls /usr/lib/firewalld/zones
+ 
+	default Zones
+		# firewall-cmd --get-default-zone 
+
+	active zone with Iterface 
+		# firewall-cmd --get-active-zones
+	
+	list all rule of active Zone
+		# firewall-cmd --list-all
+
+	
+	list all rules of zones that we want to see
+		# firewall-cmd --zone=dmz --list-all
+	
+	change the interface of the Zone
+
+		# firewall-cmd --zone=dmz --change-interface=ens33
+		# firewall-cmd --zone=dmz --add-interface=ens33
+		# firewall-cmd --zone=dmz --remove-interface=ens33
+		# firewall-cmd --zone=dmz --list-interface
+	
+	
+	make Permanent 
+		# firewall-cmd --zone=dmz --change-interface=ens33
+		# anything and then --permanet
+		# firewall-cmd --reload	
+	
+	create new Zone
+		# firewall-cmd --new-zone=hpcsa --permanent 
+		# firewall-cmd --reload
+		# firewall-cmd --get-zones
+
+		# firewall-cmd --set-default-zone=hpcsa
+		
+		# firewall-cmd --add-interface=ens33 --permanent
+
+		# firewall-cmd  --delete-zone=hpcsa --permanet
+
+	add or remove Services 
+		# firewall-cmd --get-services
+
+		# firewall-cmd --zone=public --add-service=ssh --permanent
+		# firewall-cmd --zone=public --add-service={http,https} --permanent
+		
+		# firewall-cmd --zone=public --remove-service=ssh --permanent
+		# firewall-cmd --zone=public --remove-service={http,https} --permanent
+
+	add or remove Port
+		# firewall-cmd --zone=public --add-port=2020/tcp --permanent
+		# firewall-cmd --zone=public --add-port=8080/udp --add-port=4040/tcp --permanent
+		#firewall-cmd --reload 
+		# firewall-cmd --zone=public --remove-port=2020/tcp --permanent
+		# firewall-cmd --zone=public --remove-port=8080/udp --add-port=4040/tcp --permanent
+
+
+
+
+
+Rich Rules: 
+	
+	accept , reject or drop particular system or IP 
+		
+	# firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.91.102/32" reject' --permanent
+											IP / IP range       accept or drop
+	#  firewall-cmd --reload
+	
+	# firewall-cmd --zone=public --add-rich-rule='rule family="ipv4" source address="192.168.91.102/32" service name="ssh" reject' --permanent
+											IP / IP range           services name  accept or drop      
+	   
+
+
+	# firewall-cmd --zone=public 
+
+		--add-rich-rule=                            
+		'rule					    			: starting of rule
+		family="ipv4"                           : ipv4 or ipv6
+		source address="192.168.91.102/32"      : ip or range of ip
+		service name="ssh"			: telnet , ssh , http
+		limit value="1/m" 			: 1 per minute or hour sec 
+		accept'                                 : drop , accept or reject   & end of rule
+		--permanent
+		
+		
+		
+		
+
+
+
+Panic mode : 
+	# firewall-cmd --panic-on
+
+	# firewall-cmd --panic-off
+
+
+
+
+
