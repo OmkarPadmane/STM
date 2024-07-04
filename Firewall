@@ -77,7 +77,7 @@ Rich Rules:
 	   
 
 
-	# firewall-cmd --zone=public 
+	# firewall-cmd --zone=public --list-all
 
 		--add-rich-rule=                            
 		'rule					    			: starting of rule
